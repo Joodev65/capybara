@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const apiRes = await fetch(`https://yume-figure.vercel.app/api/tofigure?imgurl=${encodeURIComponent(imgurl)}`);
+    const apiRes = await fetch(`https://api-faa-skuarta2.vercel.app/faa/tofigurav2?url=${encodeURIComponent(imgurl)}`);
     const data = await apiRes.json();
 
     if (data.status === true) {
