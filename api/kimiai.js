@@ -1,4 +1,4 @@
-const PASTEBIN_RAW = "https://pastebin.com/raw/re3adUkS"
+const PASTEBIN_RAW = "https://pastebin.com/raw/dyGe19Ls"
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key="
 
 let API_KEY_CACHE = null
