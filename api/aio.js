@@ -18,22 +18,32 @@ export default async function handler(req, res) {
       return res.status(400).json({
         status: false,
         message: "url atau urlv2 parameter required",
-        author: "JooModdss"
+        creator: "JooModdss"
       });
     }
-
+ 
     if (url) {
       const api = `https://www.sankavollerei.com/download/aio?apikey=planaai&url=${encodeURIComponent(url)}`;
 
       const response = await fetch(api);
-      const data = await response.json();
+      const text = await response.text();
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        return res.status(500).json({
+          status: false,
+          message: "API Sanka return HTML",
+        });
+      }
 
       return res.status(200).json({
         ...data,
         creator: "JooModdss"
       });
     }
- 
+
     if (urlv2) {
       const api = `https://api.xte.web.id/v1/download/allinone?url=${encodeURIComponent(urlv2)}`;
 
@@ -44,24 +54,30 @@ export default async function handler(req, res) {
         try {
           response = await fetch(api);
           if (response.ok) break;
-        } catch (err) {}
+        } catch {}
 
         attempts++;
-
-        if (attempts < 3) {
-          await new Promise(r => setTimeout(r, 1000));
-        }
+        await new Promise(r => setTimeout(r, 1000));
       }
 
       if (!response || !response.ok) {
         return res.status(500).json({
           status: false,
-          message: "API XTE tidak merespon",
-          author: "JooModdss"
+          message: "API XTE tidak merespon"
         });
       }
 
-      const data = await response.json();
+      const text = await response.text();
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        return res.status(500).json({
+          status: false,
+          message: "API XTE return HTML (bukan JSON)"
+        });
+      }
 
       return res.status(200).json({
         ...data,
