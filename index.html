@@ -71,7 +71,7 @@ a.download {
 
 <div class="result" id="result"></div>
 
-  </div>  <script>
+  </div><script>
 async function download() {
   const url = document.getElementById("urlInput").value;
   const result = document.getElementById("result");
@@ -79,31 +79,17 @@ async function download() {
   result.innerHTML = "Loading...";
 
   try {
-    let res = await fetch(`/api/aio?url=${encodeURIComponent(url)}`);
-    let data = await res.json();
-
-    if (!data || data.status === false) {
-      res = await fetch(`/api/aio?urlv2=${encodeURIComponent(url)}`);
-      data = await res.json();
-    }
+    const res = await fetch(`/api/aio?url=${encodeURIComponent(url)}`);
+    const data = await res.json();
 
     if (!data || data.status === false) {
       result.innerHTML = "Gagal ambil data";
       return;
     }
 
-    const title = data.result?.title || data.title || "No Title";
-    const thumbnail = data.result?.thumbnail || data.thumbnail || "";
-
-    let medias = [];
-
-    if (Array.isArray(data.result)) {
-      medias = data.result;
-    } else if (Array.isArray(data.result?.media)) {
-      medias = data.result.media;
-    } else if (Array.isArray(data.medias)) {
-      medias = data.medias;
-    }
+    const title = data.result?.title || "No Title";
+    const thumbnail = data.result?.thumbnail || "";
+    const medias = data.result?.medias || [];
 
     let videoButtons = "";
     let audioButtons = "";
@@ -113,19 +99,15 @@ async function download() {
 
       const label = (m.quality || m.extension || "").toLowerCase();
 
-      // 🔥 DETEKSI AUDIO
-      if (
-        label.includes("audio") ||
-        label.includes("mp3")
-      ) {
+      if (label.includes("audio") || label.includes("mp3")) {
         audioButtons += `
-          <a class="download" href="${m.url}" target="_blank">
+          <a class="download audio" href="${m.url}" target="_blank">
             🎧 Download MP3
           </a>
         `;
       } else {
         videoButtons += `
-          <a class="download" href="${m.url}" target="_blank">
+          <a class="download video" href="${m.url}" target="_blank">
             🎬 Download Video ${m.quality || i + 1}
           </a>
         `;
@@ -135,16 +117,16 @@ async function download() {
     result.innerHTML = `
       <p>${title}</p>
       ${thumbnail ? `<img src="${thumbnail}" />` : ""}
-      
+
       ${videoButtons ? `<h4>Video</h4>${videoButtons}` : ""}
       ${audioButtons ? `<h4>Audio (MP3)</h4>${audioButtons}` : ""}
 
-      ${!videoButtons && !audioButtons ? "No download available" : ""}
+      ${medias.length === 0 ? "No download available" : ""}
     `;
 
   } catch (e) {
     result.innerHTML = "Error: " + e.message;
   }
 }
-  </script></body>
+</script></body>
 </html>
