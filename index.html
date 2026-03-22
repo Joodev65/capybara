@@ -52,7 +52,7 @@ img {
 
 a.download {
   display: block;
-  margin-top: 10px;
+  margin-top: 8px;
   text-align: center;
   background: #22c55e;
   padding: 10px;
@@ -79,11 +79,9 @@ a.download {
       result.innerHTML = "Loading...";
 
       try {
-        // coba url dulu
         let res = await fetch(`/api/aio?url=${encodeURIComponent(url)}`);
         let data = await res.json();
 
-        // fallback ke urlv2
         if (!data || data.status === false) {
           res = await fetch(`/api/aio?urlv2=${encodeURIComponent(url)}`);
           data = await res.json();
@@ -94,21 +92,34 @@ a.download {
           return;
         }
 
-        // ambil data (flexible karena beda API beda format)
         const title = data.title || data.result?.title || "No Title";
         const thumbnail = data.thumbnail || data.result?.thumbnail || "";
-        const downloadUrl =
-          data.url ||
-          data.result?.url ||
-          data.result?.video ||
-          data.result?.media?.[0]?.url ||
-          "";
+
+        // ambil semua media (biar ga cuma thumbnail doang)
+        let medias = [];
+
+        if (data.result?.media) {
+          medias = data.result.media;
+        } else if (data.medias) {
+          medias = data.medias;
+        } else if (data.url) {
+          medias = [{ url: data.url }];
+        }
+
+        let buttons = "";
+
+        medias.forEach((m, i) => {
+          if (m.url) {
+            buttons += `<a class="download" href="${m.url}" target="_blank">Download ${m.quality || m.type || i + 1}</a>`;
+          }
+        });
 
         result.innerHTML = `
           <p>${title}</p>
           ${thumbnail ? `<img src="${thumbnail}" />` : ""}
-          ${downloadUrl ? `<a class="download" href="${downloadUrl}" target="_blank">Download</a>` : ""}
+          ${buttons || "No download available"}
         `;
+
       } catch (e) {
         result.innerHTML = "Error: " + e.message;
       }
