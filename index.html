@@ -1,132 +1,822 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Downloader AIO</title>
+  <title>JooModdss Downloader - Video Sosial Media Tanpa Watermark</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .bg-pattern {
+      background-color: #2a0a1a;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+        linear-gradient(rgba(236, 72, 153, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(236, 72, 153, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+     
+    .glass {
+      background: rgba(42, 10, 26, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(236, 72, 153, 0.15);
+    }
+    
+     
+    .input-glow:focus {
+      box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3), 0 0 20px rgba(236, 72, 153, 0.2);
+    }
+    
+    .btn-gradient {
+      background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-gradient:hover {
+      background: linear-gradient(135deg, #db2777 0%, #9d174d 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(236, 72, 153, 0.4);
+    }
+    
+    .btn-gradient:active {
+      transform: translateY(0);
+    }
+    
+     
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(236, 72, 153, 0.3);
+      border-radius: 50%;
+      border-top-color: #ec4899;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+     
+    .pulse-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid #ec4899;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    
+    @keyframes pulse-ring {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+    
+     
+    .platform-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .platform-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2);
+      border-color: rgba(236, 72, 153, 0.3);
+    }
+    
+     
+    .result-card {
+      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+     
+    .download-btn {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .download-btn:hover::before {
+      left: 100%;
+    }
+    
+    .download-btn:hover {
+      transform: scale(1.02);
+    }
+    
+    
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+     
+    .icon-bounce:hover {
+      animation: bounce 0.5s ease;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+     
+    .shimmer {
+      background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.1), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+     
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #2a0a1a;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #ec4899;
+      border-radius: 4px;
+    }
+    
+     
+    .toast {
+      animation: toastIn 0.4s ease;
+    }
+    
+    @keyframes toastIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    .verified-badge {
+      display: inline-flex;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-    }.container {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 12px;
-  width: 350px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 10px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #38bdf8;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.result {
-  margin-top: 15px;
-}
-
-img {
-  width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-a.download {
-  display: block;
-  margin-top: 8px;
-  text-align: center;
-  background: #22c55e;
-  padding: 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
-}
-
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      border-radius: 50%;
+      margin-left: 6px;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+         
+    @media (max-width: 640px) {
+      .platform-card {
+        padding: 0.75rem 1rem;
+      }
+      .glass {
+        padding: 1.5rem;
+      }
+    }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h2>Downloader AIO</h2><input type="text" id="urlInput" placeholder="Masukkan link..." />
-<button onclick="download()">Download</button>
+<body class="bg-pattern min-h-screen text-white overflow-x-hidden">
 
-<div class="result" id="result"></div>
+   
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-72 h-72 bg-pink-500/10 rounded-full blur-3xl float"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-rose-500/5 rounded-full blur-3xl"></div>
+  </div>
 
-  </div><script>
-async function download() {
-  const url = document.getElementById("urlInput").value;
-  const result = document.getElementById("result");
+   
+  <nav class="fixed top-0 w-full z-50 glass border-b border-pink-500/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+            </div>
+            <div class="pulse-ring"></div>
+          </div>
+          <div class="flex items-center">
+            <span class="text-xl font-bold gradient-text">JooModdss</span>
+            <div class="verified-badge" title="Verified Official">
+              <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-pink-200/70">
+          <a href="#features" class="hover:text-pink-400 transition-colors">Fitur</a>
+          <a href="#platforms" class="hover:text-pink-400 transition-colors">Platform</a>
+          <a href="#download" class="hover:text-pink-400 transition-colors">Download</a>
+        </div>
+         
+        <button class="md:hidden p-2 rounded-lg hover:bg-pink-500/10 transition-colors" onclick="toggleMobileMenu()">
+          <svg class="w-6 h-6 text-pink-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+       
+      <div id="mobileMenu" class="hidden md:hidden pb-4">
+        <div class="flex flex-col gap-2">
+          <a href="#features" class="px-4 py-2 text-sm font-medium text-pink-200/70 hover:text-pink-400 hover:bg-pink-500/10 rounded-lg transition-all">Fitur</a>
+          <a href="#platforms" class="px-4 py-2 text-sm font-medium text-pink-200/70 hover:text-pink-400 hover:bg-pink-500/10 rounded-lg transition-all">Platform</a>
+          <a href="#download" class="px-4 py-2 text-sm font-medium text-pink-200/70 hover:text-pink-400 hover:bg-pink-500/10 rounded-lg transition-all">Download</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 
-  result.innerHTML = "Loading...";
+   
+  <section class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/20 mb-6">
+        <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
+        <span class="text-sm text-pink-300 font-medium">100% Gratis & Tanpa Watermark</span>
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+        Download Video <span class="gradient-text">Sosial Media</span>
+        <br />Dengan Kualitas HD
+      </h1>
+      
+      <p class="text-base sm:text-lg text-pink-100/60 mb-12 max-w-2xl mx-auto leading-relaxed px-4">
+        Solusi profesional untuk mengunduh video dari berbagai platform sosial media 
+        tanpa watermark. Cepat, aman, dan gratis digunakan.
+      </p>
 
-  try {
-    const res = await fetch(`/api/aio?url=${encodeURIComponent(url)}`);
-    const data = await res.json();
+       
+      <div id="platforms" class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-16 px-2">
+        <div class="platform-card glass px-4 sm:px-6 py-3 sm:py-4 rounded-2xl flex items-center gap-2 sm:gap-3 cursor-pointer group">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-black flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </div>
+          <span class="font-semibold text-pink-100 text-sm sm:text-base">TikTok</span>
+        </div>
 
-    if (!data || data.status === false) {
-      result.innerHTML = "Gagal ambil data";
-      return;
+        <div class="platform-card glass px-4 sm:px-6 py-3 sm:py-4 rounded-2xl flex items-center gap-2 sm:gap-3 cursor-pointer group">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </div>
+          <span class="font-semibold text-pink-100 text-sm sm:text-base">Instagram</span>
+        </div>
+
+        <div class="platform-card glass px-4 sm:px-6 py-3 sm:py-4 rounded-2xl flex items-center gap-2 sm:gap-3 cursor-pointer group">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <span class="font-semibold text-pink-100 text-sm sm:text-base">Facebook</span>
+        </div>
+
+        <div class="platform-card glass px-4 sm:px-6 py-3 sm:py-4 rounded-2xl flex items-center gap-2 sm:gap-3 cursor-pointer group">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </div>
+          <span class="font-semibold text-pink-100 text-sm sm:text-base">YouTube</span>
+        </div>
+
+        <div class="platform-card glass px-4 sm:px-6 py-3 sm:py-4 rounded-2xl flex items-center gap-2 sm:gap-3 cursor-pointer group">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-slate-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.53.02C12.67-.01 12.83 0 13 0c5.52 0 10 4.48 10 10 0 .83-.1 1.64-.29 2.41-.03.11-.07.22-.1.33-.02.08-.05.16-.08.24-.02.07-.05.14-.08.21-.03.07-.06.14-.09.2-.03.06-.06.12-.1.18-.03.06-.07.12-.1.17-.04.05-.07.11-.11.16-.04.05-.08.1-.12.15-.04.05-.08.09-.12.14-.04.04-.09.09-.13.13-.04.04-.09.08-.14.12-.04.04-.09.07-.14.11-.05.04-.1.07-.15.1-.05.03-.1.06-.16.09-.05.03-.11.05-.16.08-.05.02-.11.05-.17.07-.06.02-.11.04-.17.06-.06.02-.12.03-.18.05-.06.01-.12.03-.19.04-.06.01-.12.02-.19.03-.06.01-.13.01-.2.02-.06 0-.13.01-.2.01-.07 0-.13 0-.2 0-.07 0-.13 0-.2 0-.07 0-.13-.01-.2-.01-.06-.01-.13-.01-.2-.02-.06-.01-.13-.02-.19-.03-.06-.01-.13-.03-.19-.04-.06-.02-.12-.03-.18-.05-.06-.02-.11-.04-.17-.06-.06-.02-.11-.05-.17-.07-.05-.03-.11-.05-.16-.08-.05-.03-.11-.06-.16-.09-.05-.03-.1-.06-.15-.1-.05-.04-.1-.07-.14-.11-.05-.04-.1-.07-.14-.12-.04-.04-.09-.08-.14-.12-.04-.04-.09-.09-.13-.13-.04-.04-.08-.09-.12-.14-.04-.05-.07-.1-.11-.16-.04-.05-.07-.11-.1-.17-.04-.06-.07-.12-.1-.18-.03-.06-.06-.13-.09-.2-.03-.07-.06-.14-.08-.21-.03-.08-.06-.16-.08-.24-.03-.11-.07-.22-.1-.33-.19-.77-.29-1.58-.29-2.41 0-4.96 4.04-8.99 9-8.99.17 0 .33.01.5.03zM12 4.5c-4.14 0-7.5 3.36-7.5 7.5 0 4.14 3.36 7.5 7.5 7.5s7.5-3.36 7.5-7.5c0-4.14-3.36-7.5-7.5-7.5z"/>
+            </svg>
+          </div>
+          <span class="font-semibold text-pink-100 text-sm sm:text-base">X (Twitter)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   
+  <section id="download" class="relative px-4 sm:px-6 lg:px-8 pb-20">
+    <div class="max-w-3xl mx-auto">
+      <div class="glass rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl shadow-pink-500/10">
+        
+         
+        <div class="relative mb-6">
+          <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+            <svg class="w-5 h-5 text-pink-300/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+            </svg>
+          </div>
+          
+          <input 
+            type="text" 
+            id="urlInput" 
+            placeholder="Tempelkan link video di sini..." 
+            class="w-full pl-12 pr-14 py-4 bg-pink-950/30 border border-pink-500/20 rounded-xl text-white placeholder-pink-200/40 focus:outline-none input-glow transition-all duration-300 text-sm sm:text-base"
+          />
+          
+          <button 
+            onclick="pasteFromClipboard()" 
+            class="absolute inset-y-0 right-2 flex items-center px-3 text-pink-300/60 hover:text-pink-400 transition-colors"
+            title="Paste dari clipboard"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+            </svg>
+          </button>
+        </div>
+
+         
+        <button 
+          onclick="download()" 
+          id="submitBtn"
+          class="w-full btn-gradient py-4 rounded-xl font-semibold text-white text-base sm:text-lg flex items-center justify-center gap-2 shadow-lg shadow-pink-500/25"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          Download Video
+        </button>
+
+         
+        <div id="loadingState" class="hidden flex-col items-center justify-center py-12">
+          <div class="relative mb-4">
+            <div class="loader"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+            </div>
+          </div>
+          <p class="text-pink-200/60 animate-pulse text-sm sm:text-base">Mengambil data video...</p>
+        </div>
+
+         
+        <div id="result" class="hidden mt-8"></div>
+
+      </div>
+
+       
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+        <div class="glass rounded-2xl p-5 text-center group hover:bg-pink-950/30 transition-colors">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-pink-500/10 flex items-center justify-center icon-bounce">
+            <svg class="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-pink-100 mb-1 text-sm sm:text-base">Cepat & Efisien</h3>
+          <p class="text-xs sm:text-sm text-pink-200/60">Proses download dalam hitungan detik</p>
+        </div>
+
+        <div class="glass rounded-2xl p-5 text-center group hover:bg-pink-950/30 transition-colors">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-rose-500/10 flex items-center justify-center icon-bounce">
+            <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-pink-100 mb-1 text-sm sm:text-base">Aman & Privat</h3>
+          <p class="text-xs sm:text-sm text-pink-200/60">Tidak menyimpan data pengguna</p>
+        </div>
+
+        <div class="glass rounded-2xl p-5 text-center group hover:bg-pink-950/30 transition-colors">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-fuchsia-500/10 flex items-center justify-center icon-bounce">
+            <svg class="w-6 h-6 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-pink-100 mb-1 text-sm sm:text-base">No Watermark</h3>
+          <p class="text-xs sm:text-sm text-pink-200/60">Video bersih tanpa watermark</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   
+  <section id="features" class="relative px-4 sm:px-6 lg:px-8 py-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Mengapa Memilih <span class="gradient-text">JooModdss</span>?</h2>
+        <p class="text-pink-100/60 max-w-2xl mx-auto text-sm sm:text-base px-4">Platform download video terbaik dengan fitur lengkap dan pengalaman pengguna yang optimal</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-2 sm:px-0">
+        <div class="glass rounded-2xl p-6 hover:scale-105 transition-transform duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center mb-4">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-pink-100">Mobile Friendly</h3>
+          <p class="text-sm text-pink-200/60">Optimasi sempurna untuk perangkat mobile dan desktop</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6 hover:scale-105 transition-transform duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-400 to-pink-600 flex items-center justify-center mb-4">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-pink-100">HD Quality</h3>
+          <p class="text-sm text-pink-200/60">Dukungan resolusi hingga 4K untuk kualitas terbaik</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6 hover:scale-105 transition-transform duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-fuchsia-400 to-purple-600 flex items-center justify-center mb-4">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-pink-100">100% Gratis</h3>
+          <p class="text-sm text-pink-200/60">Tidak ada biaya tersembunyi atau langganan</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6 hover:scale-105 transition-transform duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-600 flex items-center justify-center mb-4">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-pink-100">Auto Update</h3>
+          <p class="text-sm text-pink-200/60">Selalu kompatibel dengan platform terbaru</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   
+  <section class="relative px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mx-auto">
+      <div class="glass rounded-2xl p-4 sm:p-6 border border-amber-500/20 bg-amber-950/20">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-semibold text-amber-200 mb-1 text-sm sm:text-base">Pemberitahuan Penting</h3>
+            <p class="text-xs sm:text-sm text-amber-100/80 leading-relaxed">
+              Saat ini layanan kami hanya mendukung pengunduhan video. 
+              Fitur download foto/foto galeri masih dalam pengembangan dan akan segera hadir. 
+              Terima kasih atas pengertian Anda.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   
+  <footer class="relative px-4 sm:px-6 lg:px-8 py-12 border-t border-pink-500/10">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-rose-600 flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+          </div>
+          <div class="flex items-center">
+            <span class="font-bold text-lg text-pink-100">JooModdss</span>
+            <div class="verified-badge" title="Verified Official">
+              <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        <p class="text-xs sm:text-sm text-pink-200/40 text-center">
+          2026 JooModdss Downloader. All rights reserved.
+        </p>
+        
+        <div class="flex items-center gap-4">
+          <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-pink-300/60 hover:text-pink-400 hover:bg-pink-500/10 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+            </svg>
+          </a>
+          <a href="#" class="w-10 h-10 rounded-full glass flex items-center justify-center text-pink-300/60 hover:text-pink-400 hover:bg-pink-500/10 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+   
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-xs sm:max-w-sm"></div>
+
+  <script>
+     
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
     }
 
-    const title = data.result?.title || "No Title";
-    const thumbnail = data.result?.thumbnail || "";
-    const medias = data.result?.medias || [];
+     
+    async function pasteFromClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('urlInput').value = text;
+        showToast('Link berhasil ditempel!', 'success');
+      } catch (err) {
+        showToast('Tidak dapat mengakses clipboard', 'error');
+      }
+    }
 
-    let videoButtons = "";
-    let audioButtons = "";
+     
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      const colors = {
+        success: 'bg-emerald-500/20 border-emerald-500/30 text-emerald-300',
+        error: 'bg-red-500/20 border-red-500/30 text-red-300',
+        info: 'bg-pink-500/20 border-pink-500/30 text-pink-300'
+      };
+      
+      const icons = {
+        success: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>',
+        error: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>',
+        info: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+      };
+      
+      toast.className = `toast glass px-4 py-3 rounded-xl border flex items-center gap-3 ${colors[type]}`;
+      toast.innerHTML = `${icons[type]}<span class="font-medium text-sm">${message}</span>`;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
 
-    medias.forEach((m, i) => {
-      if (!m.url) return;
-
-      const label = (m.quality || m.extension || "").toLowerCase();
-
-      if (label.includes("audio") || label.includes("mp3")) {
-        audioButtons += `
-          <a class="download audio" href="${m.url}" target="_blank">
-            🎧 Download MP3
-          </a>
+     
+    async function download() {
+      const url = document.getElementById('urlInput').value.trim();
+      const resultDiv = document.getElementById('result');
+      const loadingState = document.getElementById('loadingState');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      if (!url) {
+        showToast('Silakan masukkan link terlebih dahulu', 'error');
+        document.getElementById('urlInput').focus();
+        return;
+      }
+      
+       
+      resultDiv.classList.add('hidden');
+      loadingState.classList.remove('hidden');
+      loadingState.classList.add('flex');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Memproses...
+      `;
+      
+      try {
+        const res = await fetch(`/api/aio?url=${encodeURIComponent(url)}`);
+        const data = await res.json();
+        
+         
+        loadingState.classList.add('hidden');
+        loadingState.classList.remove('flex');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          Download Video
         `;
-      } else {
-        videoButtons += `
-          <a class="download video" href="${m.url}" target="_blank">
-            🎬 Download Video ${m.quality || i + 1}
-          </a>
+        
+        if (!data || data.status === false) {
+          showToast('Gagal mengambil data video', 'error');
+          resultDiv.innerHTML = `
+            <div class="text-center py-8">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 flex items-center justify-center">
+                <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <p class="text-red-300 font-medium">Gagal mengambil data</p>
+              <p class="text-sm text-pink-200/60 mt-1">Pastikan link yang Anda masukkan valid</p>
+            </div>
+          `;
+          resultDiv.classList.remove('hidden');
+          return;
+        }
+        
+        const title = data.result?.title || "Video Tanpa Judul";
+        const thumbnail = data.result?.thumbnail || "";
+        const medias = data.result?.medias || [];
+        
+        let videoButtons = "";
+        let audioButtons = "";
+        
+        medias.forEach((m, i) => {
+          if (!m.url) return;
+          
+          const quality = m.quality || "HD";
+          const size = m.size ? ` (${m.size})` : "";
+          const isAudio = quality.toLowerCase().includes("audio") || 
+                         (m.extension && m.extension.toLowerCase().includes("mp3"));
+          
+          if (isAudio) {
+            audioButtons += `
+              <a href="${m.url}" target="_blank" class="download-btn flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-purple-500/25 mb-3 text-sm sm:text-base">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                </svg>
+                Download Audio MP3 ${size}
+              </a>
+            `;
+          } else {
+            const qualityLabel = quality.includes("1080") ? "1080p FHD" : 
+                                quality.includes("720") ? "720p HD" : 
+                                quality.includes("480") ? "480p SD" : 
+                                quality.includes("360") ? "360p" : quality;
+            
+            videoButtons += `
+              <a href="${m.url}" target="_blank" class="download-btn flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-600 text-white font-semibold shadow-lg shadow-pink-500/25 mb-3 text-sm sm:text-base">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                Download Video ${qualityLabel} ${size}
+              </a>
+            `;
+          }
+        });
+        
+        resultDiv.innerHTML = `
+          <div class="result-card border-t border-pink-500/20 pt-8">
+            ${thumbnail ? `
+              <div class="relative rounded-2xl overflow-hidden mb-6 group">
+                <img src="${thumbnail}" alt="Thumbnail" class="w-full h-48 sm:h-64 object-cover shimmer" />
+                <div class="absolute inset-0 bg-gradient-to-t from-pink-950/80 to-transparent"></div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <h3 class="font-bold text-base sm:text-lg line-clamp-2 text-pink-100">${title}</h3>
+                </div>
+              </div>
+            ` : `
+              <div class="mb-6 p-4 rounded-xl bg-pink-950/30 border border-pink-500/20">
+                <h3 class="font-bold text-base sm:text-lg text-pink-100">${title}</h3>
+              </div>
+            `}
+            
+            <div class="space-y-4">
+              ${videoButtons ? `
+                <div>
+                  <h4 class="text-xs sm:text-sm font-semibold text-pink-300/70 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    Format Video
+                  </h4>
+                  ${videoButtons}
+                </div>
+              ` : ""}
+              
+              ${audioButtons ? `
+                <div>
+                  <h4 class="text-xs sm:text-sm font-semibold text-pink-300/70 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                    </svg>
+                    Format Audio
+                  </h4>
+                  ${audioButtons}
+                </div>
+              ` : ""}
+              
+              ${medias.length === 0 ? `
+                <div class="text-center py-8">
+                  <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/10 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                  </div>
+                  <p class="text-amber-300 font-medium text-sm sm:text-base">Tidak ada link download tersedia</p>
+                  <p class="text-xs sm:text-sm text-pink-200/60 mt-1">Coba link video lainnya</p>
+                </div>
+              ` : ""}
+            </div>
+          </div>
         `;
+        
+        resultDiv.classList.remove('hidden');
+        showToast('Video berhasil ditemukan!', 'success');
+        
+      } catch (e) {
+        loadingState.classList.add('hidden');
+        loadingState.classList.remove('flex');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+          Download Video
+        `;
+        
+        showToast('Terjadi kesalahan: ' + e.message, 'error');
+        resultDiv.innerHTML = `
+          <div class="text-center py-8">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 flex items-center justify-center">
+              <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <p class="text-red-300 font-medium text-sm sm:text-base">Error: ${e.message}</p>
+          </div>
+        `;
+        resultDiv.classList.remove('hidden');
+      }
+    }
+
+     
+    document.getElementById('urlInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        download();
       }
     });
 
-    result.innerHTML = `
-      <p>${title}</p>
-      ${thumbnail ? `<img src="${thumbnail}" />` : ""}
+     
+    const urlInput = document.getElementById('urlInput');
+    urlInput.addEventListener('focus', function() {
+      this.parentElement.classList.add('scale-[1.02]');
+      this.parentElement.style.transition = 'transform 0.3s ease';
+    });
+    
+    urlInput.addEventListener('blur', function() {
+      this.parentElement.classList.remove('scale-[1.02]');
+    });
 
-      ${videoButtons ? `<h4>Video</h4>${videoButtons}` : ""}
-      ${audioButtons ? `<h4>Audio (MP3)</h4>${audioButtons}` : ""}
-
-      ${medias.length === 0 ? "No download available" : ""}
-    `;
-
-  } catch (e) {
-    result.innerHTML = "Error: " + e.message;
-  }
-}
-</script></body>
+     
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('mobileMenu');
+      const menuBtn = document.querySelector('button[onclick="toggleMobileMenu()"]');
+      if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
 </html>
